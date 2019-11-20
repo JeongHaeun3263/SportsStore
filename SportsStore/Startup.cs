@@ -30,6 +30,8 @@ namespace SportsStore
             // whenever the controller need data in Iproductprpository, use fakeproductrepository (just provide initial data) ??
             services.AddTransient<IProductRepository, EFProductRepository>();
             services.AddMvc();
+            services.AddMemoryCache();
+            services.AddSession();
 
         }
 
@@ -44,16 +46,32 @@ namespace SportsStore
 
             app.UseStatusCodePages(); // friendly pages/message to us
             app.UseStaticFiles(); // to recongnize bootstrap files under wwwroot folder
+            app.UseSession();
+
             app.UseMvc(routes =>
             {
+
                 routes.MapRoute(
-                    name: "pagination",
-                    template: "Products/Page{productPage}",
+                    name: null,
+                    template: "{category}/Page{productPage:int}",
                     defaults: new { Controller = "Product", action = "List" });
 
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Product}/{action=List}/{id?}");
+                     name: null,
+                     template: "Page{productPage:int}",
+                     defaults: new { Controller = "Product", action = "List", productPage = 1 });
+
+                routes.MapRoute(
+                    name: null,
+                    template: "{category}",
+                    defaults: new { Controller = "Product", action = "List", productPage = 1 });
+
+                routes.MapRoute(
+                name: null,
+                template: "",
+                defaults: new { Controller = "Product", action = "List", productPage = 1 });
+
+                routes.MapRoute(name: null, template: "{controller}/{action}/{id?}");
 
             });
             SeedData.EnsurePopulated(app);
