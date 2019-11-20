@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SportsStore.Models;
 using Microsoft.EntityFrameworkCore;
+// Haeun Jeong
 
 namespace SportsStore
 {
@@ -17,6 +18,7 @@ namespace SportsStore
         // public property 
         public IConfiguration Configuration { get; }
 
+        // constructor
         public Startup(IConfiguration configuration) => Configuration = configuration;
 
         // This method gets called by the runtime. Use this method to add services to the container.

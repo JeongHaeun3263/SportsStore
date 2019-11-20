@@ -7,6 +7,7 @@ namespace SportsStore.Models
 {
     public class EFProductRepository : IProductRepository
     {
+
         private ApplicationDbContext context;
 
         public EFProductRepository(ApplicationDbContext ctx)
@@ -14,6 +15,7 @@ namespace SportsStore.Models
             context = ctx;
         }
 
+        // 'Products' from IProductRepository 
         public IQueryable<Product> Products => context.Products;
     }
 }
