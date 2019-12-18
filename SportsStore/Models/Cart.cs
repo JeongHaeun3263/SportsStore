@@ -9,6 +9,7 @@ namespace SportsStore.Models
     {
         private List<CartLine> lineCollection = new List<CartLine>();
 
+        // to override in 'Session Cart' class
         public virtual void AddItem(Product product, int quantity)
         {
             CartLine line = lineCollection

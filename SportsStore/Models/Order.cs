@@ -9,10 +9,11 @@ namespace SportsStore.Models
 {
     public class Order
     {
-        [BindNever]
+        [BindNever]         // no need in a view
         public int OrderID { get; set; }
 
         [BindNever]
+        // Icollection better for item manipulation, convert this by frame work, database record  
         public ICollection<CartLine> Lines { get; set; }
 
         [BindNever]

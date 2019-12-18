@@ -15,8 +15,18 @@ namespace SportsStore.Models
         // constructor, set up basic option for our database connection 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         { }
+        // to get products dataset from the database
         public DbSet<Product> Products { get; set; }
 
+        // step1 
         public DbSet<Order> Orders { get; set; }
+
+        // step2 
+        /*
+         * In cmd
+         * dotnet ef migrations add Orders
+         * migration script will be regenerated
+         * ch 10-9
+         */
     }
 }

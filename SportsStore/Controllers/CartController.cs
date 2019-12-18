@@ -30,13 +30,15 @@ namespace SportsStore.Controllers
                 
         }
 
-        public RedirectToActionResult AddToCart(int productId, string returnUrl)
+        public RedirectToActionResult AddToCart(int productId, string returnUrl) // ID in product summary (hidden)  
+
         {
             Product product = repository.Products
                 .FirstOrDefault(p => p.ProductID == productId);
 
             if (product != null)
             {
+                // 'Cart' class, Additem 'method'
                 cart.AddItem(product, 1);
             }
 

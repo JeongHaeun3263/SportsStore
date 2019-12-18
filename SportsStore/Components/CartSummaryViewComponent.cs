@@ -9,8 +9,10 @@ namespace SportsStore.Components
 {
     public class CartSummaryViewComponent : ViewComponent
     {
+        // to access cart, declare private member
         private Cart cart;
 
+        // constructor
         public CartSummaryViewComponent(Cart cartService)
         {
             cart = cartService;

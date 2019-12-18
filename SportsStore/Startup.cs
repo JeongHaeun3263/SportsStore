@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SportsStore.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 // Haeun Jeong
 
 namespace SportsStore
@@ -27,15 +28,26 @@ namespace SportsStore
         {
             // connecting database to data string 
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["Data:SportsStoreProducts:ConnectionString"]));
+
+            services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(Configuration["Data:SportsStoreIdentity:ConnectionString"]));
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppIdentityDbContext>()
+                .AddDefaultTokenProviders(); // user can change password etc...
+
             // whenever the controller need data in Iproductprpository, use fakeproductrepository (just provide initial data) ??
             services.AddTransient<IProductRepository, EFProductRepository>();
 
+            // whenever I need a Cart use get cart to return a session cart 
             services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
+            // whenever I need to access to HttpAccess
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddTransient<IOrderRepository, EFOrderRepository>();
 
             services.AddMvc();
+
+            // setting up memory in the server, we need to add session
             services.AddMemoryCache();
             services.AddSession();
 
@@ -52,7 +64,8 @@ namespace SportsStore
 
             app.UseStatusCodePages(); // friendly pages/message to us
             app.UseStaticFiles(); // to recongnize bootstrap files under wwwroot folder
-            app.UseSession();
+            app.UseSession(); // to store infomation of cart 
+            app.UseAuthentication(); 
 
             app.UseMvc(routes =>
             {
@@ -72,6 +85,7 @@ namespace SportsStore
                     template: "{category}",
                     defaults: new { Controller = "Product", action = "List", productPage = 1 });
 
+                // default 
                 routes.MapRoute(
                 name: null,
                 template: "",
@@ -81,7 +95,7 @@ namespace SportsStore
 
             });
             SeedData.EnsurePopulated(app);
-            
+            IdentitySeedData.EnsurePopulated(app);
         }
     }
 }

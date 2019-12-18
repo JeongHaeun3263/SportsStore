@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace SportsStore.Models
 {
     // hard cording 
-    public class FakeProductRepository : IProductRepository
+    public class FakeProductRepository /*: IProductRepository */
     {
         // as 'IQueryable<Product>' is read only properties, we are using => 
         public IQueryable<Product> Products => new List<Product>

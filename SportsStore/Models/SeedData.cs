@@ -14,6 +14,7 @@ namespace SportsStore.Models
         {
             ApplicationDbContext context = app.ApplicationServices.GetRequiredService<ApplicationDbContext>();
 
+            // by calling this method, create database, add data in table
             context.Database.Migrate();
 
             if (!context.Products.Any())

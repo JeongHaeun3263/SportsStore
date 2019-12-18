@@ -4,11 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-
+// ch9 - 11
 namespace SportsStore.Infrastructure
 {
     public static class SessionExtensions
     {
+        // save information as json
         public static void SetJson(this ISession session, string key, object value)
         {
             session.SetString(key, JsonConvert.SerializeObject(value));
